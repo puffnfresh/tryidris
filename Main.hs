@@ -30,8 +30,6 @@ import qualified Data.Text.Lazy as T
 import qualified Data.Text.Lazy.Encoding as E
 import qualified Data.Vector as V
 
-import Debug.Trace
-
 {- Talking to Idris ideslave -}
 encodeCommand :: String -> String
 encodeCommand s = printf "%06x%s" (length s) s
