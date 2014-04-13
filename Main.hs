@@ -9,7 +9,7 @@ import Control.Monad.Trans (liftIO)
 import Data.Aeson as JSON hiding (json)
 import Data.Char (isSpace)
 import Data.List (isPrefixOf)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromMaybe, listToMaybe)
 import Data.Monoid (mempty)
 import Language.Sexp.Parser (Sexp(..), parseMaybe)
 import Network.HTTP.Types.Status (badRequest400)
@@ -99,7 +99,10 @@ main = do
   idrisRef <- newEmptyMVar
   spawnIdris >>= putMVar idrisRef
 
-  scottyH' 3000 $ do
+  cmdArgs <- getArgs
+  let port = maybe 3000 read $ listToMaybe cmdArgs
+
+  scottyH' port $ do
     middleware . staticPolicy $ addBase "static"
     setTemplatesDir "templates"
     get "/" $ redirect "/console"
