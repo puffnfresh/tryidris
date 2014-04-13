@@ -12,10 +12,9 @@ jQuery(function() {
         case ':doc-overview':
         case ':source-loc':
         case ':type':
+        default:
             className = '';
             break;
-        default:
-            throw new Error("TODO " + JSON.stringify(decoration));
         }
 
         return className;
