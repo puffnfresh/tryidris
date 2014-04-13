@@ -1,18 +1,20 @@
 {{>header.htm}}
       <div class="console"></div>
       <div class="panel panel-default">
-        <div class="panel-heading">Trying Idris</div>
+        <div class="panel-heading">Using Idris</div>
         <div class="panel-body">
           <p><a href="http://www.idris-lang.org/">Idris</a> is a
           language for practical, dependently typed, functional
           programming. The <a href="http://eb.host.cs.st-andrews.ac.uk/writings/idris-tutorial.pdf">Idris
           Tutorial</a> is the best resource for becoming familiar with
-          Idris. You can use
+          with the language. You can use
           the <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>
-          above to play with Idris. Try out these examples:</p>
+          above to play around without installing the compiler on your
+          computer. Give these examples a go:</p>
 
           <pre><code>&quot;Hello world&quot;</code></pre>
           <pre><code>reverse (the (Vect 3 _) [1, 2, 3])</code></pre>
+          <pre><code>the (n ** Vect (S n) Int) (3 ** [1, 2, 3, 4])</code></pre>
 
           <p>You can also compile Idris <a href="/compile">to
           JavaScript</a> from this service.</p>
