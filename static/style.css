@@ -1,0 +1,82 @@
+body {
+    background: #FAFAED;
+    color: #666;
+}
+
+h1 {
+    font-weight: 200;
+    font-size: 3.5em;
+    color: #6D0839;
+    padding-bottom: 0.28em;
+}
+
+.navigation {
+    margin-top: 1em;
+}
+
+.console {
+    border: 1px solid #D8D8C0;
+    padding: 1em 0 1em 1em;
+    background: #FFF;
+    font-family: monospace;
+    font-size: 12pt;
+}
+
+.CodeMirror {
+    border: 1px solid #D8D8C0;
+    padding: 1em 0 1em 1em;
+    font-size: 12pt;
+}
+
+.jquery-console-prompt-label {
+    font-weight: bold;
+    color: #6D0839;
+}
+
+.jquery-console-inner {
+    height: 20em;
+    overflow: auto;
+}
+
+.jquery-console-cursor {
+    background: #CCC;
+}
+
+.error {
+    color: #F00;
+    font-weight: bold;
+}
+
+.name {
+    color: #0F0;
+}
+
+.bound {
+    color: #F0F;
+}
+
+.data {
+    color: #F00;
+}
+
+.type {
+    color: #00F;
+}
+
+.jquery-console-message {
+    display: inline;
+}
+
+.js-output {
+    background: #FFF;
+}
+
+.compile-buttons {
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+
+footer {
+    padding-top: 1em;
+    text-align: center;
+}

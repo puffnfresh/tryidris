@@ -1,0 +1,13 @@
+{{>header.htm}}
+      <textarea id="code">module Main
+
+import JavaScript
+
+main : IO ()
+main = alert "Hello world!"</textarea>
+      <p class="compile-buttons">
+        <button type="button" class="btn btn-primary" id="execute-button">Compile and execute</button>
+        <button type="button" class="btn btn-default" id="compile-button">Compile to JavaScript</button>
+      </p>
+      <pre class="js-output"><code id="output"></code></pre>
+{{>footer.htm}}
