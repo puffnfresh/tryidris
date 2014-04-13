@@ -1,5 +1,3 @@
-alert("This website abuses rawgit.com. You should complain to its owner.");
-
 if (typeof console !== 'undefined') {
   console.error("This website abuses rawgit.com.");
 }
