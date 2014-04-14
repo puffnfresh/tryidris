@@ -75,10 +75,13 @@ compile code = do
              , "-o", "/dev/stdout"
              , tempFile]
 
-  (_, Just idrisStdout, _, _) <- createProcess $ (proc "idris" args) { std_out = CreatePipe }
+  (_, Just idrisStdout, _, idrisProcess) <- createProcess $ (proc "idris" args) { std_out = CreatePipe }
 
   hSetBuffering idrisStdout NoBuffering
   !output <- hGetContents idrisStdout
+
+  hClose idrisStdout
+  terminateProcess idrisProcess
 
   removeDirectoryRecursive idrisTempDir
   return output
@@ -130,8 +133,10 @@ main = do
           putMVar idrisVar . Just . fromMaybe [List []] . parseMaybe $ L.pack response
         monitorThread <- liftIO . forkIO $ do
           threadDelay 1000000
-          (_, _, idrisProcess) <- takeMVar idrisRef
+          (idrisStdin, idrisStdout, idrisProcess) <- takeMVar idrisRef
           killThread idrisThread
+          hClose idrisStdout
+          hClose idrisStdin
           terminateProcess idrisProcess
           spawnIdris >>= putMVar idrisRef
           putMVar idrisVar Nothing
