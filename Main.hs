@@ -1,4 +1,3 @@
-{-# LANGUAGE BangPatterns #-}
 module Main where
 
 import Control.Applicative ((<$>))
@@ -75,13 +74,7 @@ compile code = do
              , "-o", "/dev/stdout"
              , tempFile]
 
-  (_, Just idrisStdout, _, idrisProcess) <- createProcess $ (proc "idris" args) { std_out = CreatePipe }
-
-  hSetBuffering idrisStdout NoBuffering
-  !output <- hGetContents idrisStdout
-
-  hClose idrisStdout
-  terminateProcess idrisProcess
+  output <- readProcess "idris" args ""
 
   removeDirectoryRecursive idrisTempDir
   return output
