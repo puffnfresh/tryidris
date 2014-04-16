@@ -1,6 +1,7 @@
 jQuery(function() {
     var textarea = document.getElementById('code'),
-        editor = textarea && CodeMirror.fromTextArea(textarea);
+        editor = textarea && CodeMirror.fromTextArea(textarea),
+        hash = document.location.hash.substr(1);
 
     function updateOutput(code) {
         jQuery('#output').text(code);
@@ -37,9 +38,11 @@ jQuery(function() {
     });
 
     if(editor) {
-        try {
-            editor.setValue(atob(document.location.hash.substr(1)));
-        } catch(e) {}
+        if(hash) {
+            try {
+                editor.setValue(atob(hash));
+            } catch(e) {}
+        }
         compile(updateOutput);
     }
 });
