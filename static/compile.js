@@ -32,5 +32,14 @@ jQuery(function() {
         compile(updateOutput);
     });
 
-    textarea && compile(updateOutput);
+    jQuery('#share-button').click(function() {
+        document.location.hash = '#' + (btoa && btoa(editor.getValue()));
+    });
+
+    if(editor) {
+        try {
+            editor.setValue(atob(document.location.hash.substr(1)));
+        } catch(e) {}
+        compile(updateOutput);
+    }
 });
