@@ -74,10 +74,10 @@ compile code = do
              , "-o", "/dev/stdout"
              , tempFile]
 
-  output <- readProcess "idris" args ""
+  (_, output, stderr) <- readProcessWithExitCode "idris" args ""
 
   removeDirectoryRecursive idrisTempDir
-  return output
+  return $ stderr ++ output
 
 spawnIdris :: IO (Handle, Handle, ProcessHandle)
 spawnIdris = do
