@@ -28,8 +28,7 @@ executable tryidris
                      , filepath
                      , hastache
                      , http-types
-                     -- 0.9.12 uses pthreads not compatible with Ubuntu 10.04
-                     , idris >=0.9 && <0.9.12
+                     , idris ==0.9.14.3
                      , mtl
                      , process
                      , scotty >=0.7 && <0.8
