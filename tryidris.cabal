@@ -21,7 +21,7 @@ executable tryidris
   default-extensions:  OverloadedStrings
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base >=4.6 && <4.7
+  build-depends:       base >=4.6 && <4.8
                      , aeson
                      , bytestring
                      , directory
