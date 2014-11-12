@@ -68,7 +68,7 @@ compile code = do
   hClose tempHandle
 
   let args = ["--codegen", "javascript"
-             , "--package", "javascript"
+             , "--package", "iquery"
              , "--ibcsubdir", idrisTempDir
              , "--nocolour"
              , "-o", "/dev/stdout"
