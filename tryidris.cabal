@@ -21,7 +21,7 @@ executable tryidris
   default-extensions:  OverloadedStrings
   -- other-modules:
   -- other-extensions:
-  build-depends:       base >=4.6 && <4.7
+  build-depends:       base >=4.6
                      , aeson
                      , bytestring
                      , directory
@@ -32,9 +32,9 @@ executable tryidris
                      , idris >=0.9 && <0.9.12
                      , mtl
                      , process
-                     , scotty >=0.7 && <0.8
-                     , scotty-hastache >=0.2 && <0.3
-                     , sexp >=0.7 && <0.8
+                     , scotty
+                     , scotty-hastache
+                     , sexp
                      , text
                      , utf8-string
                      , vector
