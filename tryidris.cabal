@@ -15,11 +15,20 @@ category:            Development
 build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
+data-files:          static/*.css
+                     static/*.js
+                     static/scripts/codemirror.min.js
+                     static/scripts/haskell.js
+                     static/scripts/jquery-1.10.1.min.js
+                     static/scripts/jquery.console.js
+                     static/styles/bootstrap.min.css
+                     static/styles/codemirror.css
+                     templates/*.htm
 
 executable tryidris
   main-is:             Main.hs
   default-extensions:  OverloadedStrings
-  -- other-modules:
+  other-modules:       Paths_tryidris
   -- other-extensions:
   build-depends:       base >=4.6
                      , aeson
