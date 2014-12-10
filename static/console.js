@@ -31,6 +31,9 @@ jQuery(function() {
                 count = parseInt(decoration[1]),
                 i;
 
+            if(decoration[2][0][0] != ':decor')
+                return;
+
             for(i = 0; i < decoration[2].length; i++) {
                 className += ' ' + decorationToClassName(decoration[2][i]);
             }
