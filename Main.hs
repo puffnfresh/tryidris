@@ -29,6 +29,8 @@ import qualified Data.Text.Lazy as T
 import qualified Data.Text.Lazy.Encoding as E
 import qualified Data.Vector as V
 
+import Paths_tryidris
+
 {- Talking to Idris ideslave -}
 encodeCommand :: String -> String
 encodeCommand s = printf "%06x%s" (length s) s
@@ -68,7 +70,7 @@ compile code = do
   hClose tempHandle
 
   let args = ["--codegen", "javascript"
-             , "--package", "javascript"
+             , "--package", "iquery"
              , "--ibcsubdir", idrisTempDir
              , "--nocolour"
              , "-o", "/dev/stdout"
@@ -98,10 +100,12 @@ main = do
 
   cmdArgs <- getArgs
   let port = maybe 3000 read $ listToMaybe cmdArgs
+  staticDir <- getDataFileName "static"
+  templatesDir <- getDataFileName "templates"
 
   scottyH' port $ do
-    middleware . staticPolicy $ addBase "static"
-    setTemplatesDir "templates"
+    middleware . staticPolicy $ addBase staticDir
+    setTemplatesDir templatesDir
     get "/" $ redirect "/console"
     get "/console" $ do
       setH "in-console" $ MuBool True
