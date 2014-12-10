@@ -3,7 +3,7 @@ module Main where
 import Control.Applicative ((<$>))
 import Control.Concurrent (forkIO, killThread, threadDelay)
 import Control.Concurrent.MVar (newEmptyMVar, putMVar, readMVar, takeMVar)
-import Control.Monad (mzero, forever, replicateM)
+import Control.Monad (mzero, forever, replicateM, void)
 import Control.Monad.Trans (liftIO)
 import Data.Aeson as JSON hiding (json)
 import Data.Char (isSpace)
@@ -85,6 +85,9 @@ spawnIdris = do
 
   hSetBuffering stdin NoBuffering
   hSetBuffering stdout NoBuffering
+
+  -- Idris prints the version immediately, let's take it off.
+  void $ getResponse stdout
 
   return (stdin, stdout, process)
 
