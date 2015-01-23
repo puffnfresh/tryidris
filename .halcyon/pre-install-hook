@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+source "${HALCYON_DIR}/src.sh"
+
+
+install_idris_packages () {
+	local source_dir install_dir
+	expect_args source_dir install_dir -- "$@"
+
+	local -a packages_a
+	packages_a=()
+	packages_a+=( 'https://github.com/idris-hackers/iQuery' )
+
+	local packages idris_dir lib_dir
+	packages=$( IFS=$'\n' && echo "${packages_a[*]:-}" ) || return 1
+	idris_dir=$( get_tmp_dir 'halcyon-idris' ) || return 1
+	lib_dir=$( idris --libdir ) || return 1
+
+	log 'Installing Idris packages'
+
+	local names
+	names=$( git_acquire_all "${source_dir}" "${packages}" "${idris_dir}" ) || return 1
+
+	local name
+	while read -r name; do
+		log "Installing Idris package: ${name}"
+
+		local idris_file
+		idris_file=$(
+			find_tree "${idris_dir}/${name}" -maxdepth 1 -type f -name '*.ipkg' |
+			match_exactly_one
+		) || return 1
+
+		(
+			cd "${idris_dir}/${name}" &&
+			TARGET="${install_dir}${lib_dir}" \
+				idris --install "${idris_file}" |& quote
+		) || return 1
+	done <<<"${names}"
+
+	rm -rf "${idris_dir}" || return 1
+}
+
+
+pre_install_hook () {
+	expect_vars HALCYON_BASE
+
+	local tag source_dir install_dir data_dir
+	expect_args tag source_dir install_dir data_dir -- "$@"
+
+	local magic_dir
+	magic_dir="${source_dir}/.halcyon/idris-0.9.16"
+
+	local -a opts_a
+	opts_a=()
+	opts_a+=( --root="${install_dir}" )
+	opts_a+=( --prefix="${HALCYON_BASE}" )
+	opts_a+=( --constraints="${magic_dir}/constraints" )
+	opts_a+=( --sandbox-sources="${magic_dir}/sandbox-sources" )
+	opts_a+=( --sandbox-extra-apps="${magic_dir}/sandbox-extra-apps" )
+	opts_a+=( --sandbox-extra-apps-constraints="${magic_dir}/sandbox-extra-apps-constraints" )
+
+	halcyon install "${opts_a[@]}" 'idris-0.9.16' || return 1
+
+	# NOTE: Idris needs to be already installed, so that Idris packages
+	# can be installed, in order to be archived as part of the
+	# application install directory.
+
+	copy_dir_into "${install_dir}${HALCYON_BASE}" "${HALCYON_BASE}" || return 1
+	rm -rf "${HALCYON_BASE}/share/doc" || return 1
+
+	log
+	if ! install_idris_packages "${source_dir}" "${install_dir}"; then
+		log_error 'Failed to install Idris packages'
+		return 1
+	fi
+}
+
+
+pre_install_hook "$@"

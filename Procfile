@@ -1,1 +1,1 @@
-web: cabal run -- $PORT
+web: bin/tryidris $PORT

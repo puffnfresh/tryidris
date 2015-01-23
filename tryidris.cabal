@@ -15,15 +15,6 @@ category:            Development
 build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
-data-files:          static/*.css
-                     static/*.js
-                     static/scripts/codemirror.min.js
-                     static/scripts/haskell.js
-                     static/scripts/jquery-1.10.1.min.js
-                     static/scripts/jquery.console.js
-                     static/styles/bootstrap.min.css
-                     static/styles/codemirror.css
-                     templates/*.htm
 
 executable tryidris
   main-is:             Main.hs
@@ -37,8 +28,6 @@ executable tryidris
                      , filepath
                      , hastache
                      , http-types
-                     -- 0.9.12 uses pthreads not compatible with Ubuntu 10.04
-                     , idris >=0.9 && <0.9.12
                      , mtl
                      , process
                      , scotty
