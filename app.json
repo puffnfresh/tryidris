@@ -1,0 +1,12 @@
+{
+  "name": "Try Idris",
+  "description": "Idris compiler on a webpage",
+  "logo": "https://halcyon.sh/logo.svg",
+  "repository": "https://github.com/mietek/tryidris",
+  "env": {
+    "BUILDPACK_URL": {
+      "description": "Heroku buildpack for deploying Haskell apps",
+      "value": "https://github.com/mietek/haskell-on-heroku"
+    }
+  }
+}
