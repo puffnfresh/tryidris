@@ -70,7 +70,6 @@ compile code = do
   hClose tempHandle
 
   let args = ["--codegen", "javascript"
-             , "--package", "iquery"
              , "--ibcsubdir", idrisTempDir
              , "--nocolour"
              , "-o", "/dev/stdout"
@@ -92,6 +91,20 @@ spawnIdris = do
   void $ getResponse stdout
 
   return (stdin, stdout, process)
+
+parseResponse :: String -> [Sexp]
+parseResponse = fromMaybe [List []] . parseMaybe . L.pack
+
+isReturn :: [Sexp] -> Bool
+isReturn [List (Atom ":return" : _)] = True
+isReturn _ = False
+
+repeatUntil :: Monad m => (a -> Bool) -> m a -> m a
+repeatUntil f m = do
+  a <- m
+  if f a
+  then return a
+  else repeatUntil f m
 
 main :: IO ()
 main = do
@@ -129,8 +142,8 @@ main = do
         idrisThread <- liftIO . forkIO $ do
           (idrisStdin, idrisStdout, _) <- readMVar idrisRef
           hPutStr idrisStdin . encodeCommand $ "((:interpret " ++ show e ++ ") 1)\n"
-          response <- getResponse idrisStdout
-          putMVar idrisVar . Just . fromMaybe [List []] . parseMaybe $ L.pack response
+          response <- repeatUntil isReturn $ parseResponse <$> getResponse idrisStdout
+          putMVar idrisVar $ Just response
         monitorThread <- liftIO . forkIO $ do
           threadDelay 1000000
           (idrisStdin, idrisStdout, idrisProcess) <- takeMVar idrisRef

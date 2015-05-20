@@ -7,6 +7,8 @@
     "BUILDPACK_URL": {
       "description": "Heroku buildpack for deploying Haskell apps",
       "value": "https://github.com/mietek/haskell-on-heroku"
-    }
+    },
+    "HALCYON_GHC_VERSION": "7.10.1",
+    "HALCYON_CABAL_VERSION": "1.22.4.0"
   }
 }

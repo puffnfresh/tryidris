@@ -9,7 +9,8 @@ install_idris_packages () {
 
 	local -a packages_a
 	packages_a=()
-	packages_a+=( 'https://github.com/idris-hackers/iQuery' )
+
+	[ -z "$packages_a" ] && return 0
 
 	local packages idris_dir lib_dir
 	packages=$( IFS=$'\n' && echo "${packages_a[*]:-}" ) || return 1
@@ -49,7 +50,7 @@ pre_install_hook () {
 	expect_args tag source_dir install_dir data_dir -- "$@"
 
 	local magic_dir
-	magic_dir="${source_dir}/.halcyon/idris-0.9.16"
+	magic_dir="${source_dir}/.halcyon/idris-0.9.18"
 
 	local -a opts_a
 	opts_a=()
@@ -60,7 +61,7 @@ pre_install_hook () {
 	opts_a+=( --sandbox-extra-apps="${magic_dir}/sandbox-extra-apps" )
 	opts_a+=( --sandbox-extra-apps-constraints="${magic_dir}/sandbox-extra-apps-constraints" )
 
-	halcyon install "${opts_a[@]}" 'idris-0.9.16' || return 1
+	halcyon install "${opts_a[@]}" 'idris-0.9.18' || return 1
 
 	# NOTE: Idris needs to be already installed, so that Idris packages
 	# can be installed, in order to be archived as part of the

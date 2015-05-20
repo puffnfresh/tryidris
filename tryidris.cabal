@@ -16,6 +16,16 @@ build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
 
+data-files:          templates/*.htm
+                     static/*.js
+                     static/*.css
+                     static/scripts/codemirror.min.js
+                     static/scripts/haskell.js
+                     static/scripts/jquery-1.10.1.min.js
+                     static/scripts/jquery.console.js
+                     static/styles/bootstrap.min.css
+                     static/styles/codemirror.css
+
 executable tryidris
   main-is:             Main.hs
   default-extensions:  OverloadedStrings
